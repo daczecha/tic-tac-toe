@@ -7,35 +7,95 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <div class="board">
-        <div id = "0" class="cell" onclick="play(this.id)">
-            <i id = "0_sign" class=""></i>
+    <div id="game-settings">
+        <h1>PLEASE CHOOSE GAME TYPE</h1>
+        <div class="choose">
+            <div class="player-vs-player" id = "player-vs-player" onclick="selectMode(this.id)">
+                <h3>PvP</h3>
+                <div class="container">
+                    <div class="player-container" >
+                        <label >ENTER NAME</label>
+                        <input type = text id = "player_name" maxlength="10" placeholder="PLAYER ONE" disabled>
+                    </div>
+                    <div class="player-container">     
+                        <label >ENTER NAME</label>
+                        <input type = text id = "opponent_name" maxlength="10" placeholder="PLAYER ONE" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <div class="player-vs-computer" id="player-vs-computer" onclick="selectMode(this.id)">
+                <h3>PvC</h3>
+                <div class="container">
+                    <div class="player-container">
+                        <label >ENTER NAME</label>
+                        <input type = text id = "pvc_player_name" maxlength="10" placeholder="PLAYER ONE" disabled>
+                    </div>
+                    <div class="computer-container">     
+                        <label >CHOOSE DIFFICULTY</label>
+                        <div class="difficulties">
+                            <button class = "difficulty" id = "easy" disabled>EASY</button>
+                            <button class = "difficulty" id = "hard" disabled>HARD</button>
+                            <button class = "difficulty" id = "impossible" disabled>IMPOSSIBLE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id = "1" class="cell" onclick="play(this.id)">
-            <i id = "1_sign" class=""></i>
+        <button class = "btn" id = "submit" onclick = "startGame()">PLAY</button >
+    </div>
+
+    <div id="game">
+        <div class="stats">
+            <div class="player" id = "player">
+                <span class ="name" id="player_name_display"></span><span class = "score"  id ="player_score">0</span>
+            </div>
+            VS
+            <div class="player" id = "opponent">
+                <span class ="name" id="opponent_name_display"></span><span class = "score" id ="opponent_score">0</span>
+            </div>
         </div>
-        <div id = "2" class="cell" onclick="play(this.id)">
-            <i id = "2_sign" class=""></i>
-        </div>
-        <div id = "3" class="cell" onclick="play(this.id)">
-            <i id = "3_sign" class=""></i>
-        </div>
-        <div id = "4" class="cell" onclick="play(this.id)">
-            <i id = "4_sign" class=""></i>
-        </div>
-        <div id = "5" class="cell" onclick="play(this.id)">
-            <i id = "5_sign" class=""></i>
-        </div>
-        <div id = "6" class="cell" onclick="play(this.id)">
-            <i id = "6_sign" class=""></i>
-        </div>
-        <div id = "7" class="cell" onclick="play(this.id)">
-            <i id = "7_sign" class=""></i>
-        </div>
-        <div id = "8" class="cell" onclick="play(this.id)">
-            <i id = "8_sign" class=""></i>
+        <div class="board">
+            <div id = "0" class="cell" onclick="play(this.id)">
+                <i id = "0_sign" class=""></i>
+            </div>
+            <div id = "1" class="cell" onclick="play(this.id)">
+                <i id = "1_sign" class=""></i>
+            </div>
+            <div id = "2" class="cell" onclick="play(this.id)">
+                <i id = "2_sign" class=""></i>
+            </div>
+            <div id = "3" class="cell" onclick="play(this.id)">
+                <i id = "3_sign" class=""></i>
+            </div>
+            <div id = "4" class="cell" onclick="play(this.id)">
+                <i id = "4_sign" class=""></i>
+            </div>
+            <div id = "5" class="cell" onclick="play(this.id)">
+                <i id = "5_sign" class=""></i>
+            </div>
+            <div id = "6" class="cell" onclick="play(this.id)">
+                <i id = "6_sign" class=""></i>
+            </div>
+            <div id = "7" class="cell" onclick="play(this.id)">
+                <i id = "7_sign" class=""></i>
+            </div>
+            <div id = "8" class="cell" onclick="play(this.id)">
+                <i id = "8_sign" class=""></i>
+            </div>
         </div>
     </div>
+
+    <div id="blur"></div>
+    <div id="modal">
+        <h1 id = "message"></h1>
+        <div class="score">
+            <span id ="player_score_modal"></span> : <span id ="opponent_score_modal"></span>
+        </div>
+        <button class = "btn" id = "replay" onclick = "replay()">NEW ROUND</button>
+        <button class = "btn" id = "restart" onclick = "restart()">NEW GAME</button>
+    </div>
+
 </body>
     <script src="script.js"></script>
 </html>
