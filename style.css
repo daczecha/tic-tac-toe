@@ -260,15 +260,19 @@ filter: brightness(.9);
     flex-direction: column;
     align-items:center;
     color:white;
-    gap:5px
 }
 
 .computer-container{
     display: flex;
     flex-direction: column;
     align-items:center;
+    justify-content: center;
     color:white;
-    gap:5px
+    width:192px;
+    height: 49px;
+    font-size: 22px;
+    letter-spacing: 2px;
+
 }
 
 .difficulty{
@@ -285,4 +289,9 @@ input{
 
 .selected{
     background:  #6c5ce7;
+}
+
+.computer-container i {
+    color:white;
+    font-size: 25px;
 }

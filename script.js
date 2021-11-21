@@ -16,6 +16,9 @@ let PvP = false;
 let PvC = false;
 
 
+let computerTurn = false;
+let gameOver = false;
+
 
 const $modal = document.getElementById("modal");
 const $blur = document.getElementById("blur");
@@ -39,30 +42,69 @@ let xTurn = true;
 
 setActive();    
 
+
+
 function play(index){
     index = Number(index);
     if(PvP === true){
-        if(board[index] === undefined){
-            if (xTurn){
-                board[index] = 1;
-                document.getElementById(`${index}_sign`).classList.add('fas', 'fa-times');
-                xTurn = !xTurn;
-            }else {
-                board[index] = 0;
-                document.getElementById(`${index}_sign`).classList.add('far', 'fa-circle');
-                xTurn = !xTurn;
-            }
-            setActive();
-            checkWin();
-        }
+        playPlayer(index);
     }
+    if(PvC === true){
+        playComputer(index);
+    }
+}
+
+function playPlayer(index){
+    if(board[index] === undefined){
+        if (xTurn){
+            board[index] = 1;
+            document.getElementById(`${index}_sign`).classList.add('fas', 'fa-times');
+            xTurn = !xTurn;
+        }else {
+            board[index] = 0;
+            document.getElementById(`${index}_sign`).classList.add('far', 'fa-circle');
+            xTurn = !xTurn;
+        }
+        setActive();
+        checkWin();
+    }
+}
+
+function playComputer(index){
+    if(board[index] === undefined){
+        if(computerTurn === false){
+            board[index] = 1;
+            document.getElementById(`${index}_sign`).classList.add('fas', 'fa-times');
+            setTimeout(()=>{checkWin()}, 100);
+            xTurn = !xTurn;
+            setActive();
+        }
+            if(gameOver === false){
+                computerTurn = true;
+                let randomIndex;
+                for(let i = 0; i < 8; i++){
+                    randomIndex = getRandomInt(0,8);
+                    if(board[randomIndex] === undefined){
+                        board[randomIndex] = 0;
+                        document.getElementById(`${randomIndex}_sign`).classList.add('far', 'fa-circle');
+                        setTimeout(()=>{checkWin()}, 100);
+                        xTurn = !xTurn;
+                        computerTurn = false;
+                        setActive();
+                        break;
+                    }
+                }
+            }
+    } 
 }
 
 
 
 
 
+
 function checkWin(){
+
     if (
         (board[0]+board[1]+board[2]) === 3 ||
         (board[3]+board[4]+board[5]) === 3 ||
@@ -75,6 +117,7 @@ function checkWin(){
         (board[0]+board[4]+board[8]) === 3 ||
         (board[6]+board[4]+board[2]) === 3
     ){
+        gameOver = true;
         player.win();
     }else if (
         (board[0]+board[1]+board[2]) === 0 ||
@@ -89,9 +132,11 @@ function checkWin(){
         (board[6]+board[4]+board[2]) === 0
 
     ){
+        gameOver = true;
         opponent.win();
     }else{
         if(checkBoardFull()){
+            gameOver = true;
             popModal("Draw!");
         }
     }
@@ -128,13 +173,11 @@ function restart(){
 
     PvP = false;
     PvC = false;
-
+    gameOver = false;
 
     document.getElementById('player-vs-player').classList.remove('selected');
     document.getElementById('player-vs-computer').classList.remove('selected');
     document.getElementById("pvc_player_name").disabled = true; 
-    document.getElementById("easy").disabled = true; 
-    document.getElementById("hard").disabled = true; 
     document.getElementById("impossible").disabled = true; 
     document.getElementById("player_name").disabled = true; 
     document.getElementById("opponent_name").disabled = true;
@@ -145,6 +188,7 @@ function replay(){
     for(let i = 0 ; i < 9; i++){
         document.getElementById(`${i}_sign`).classList.remove('fas','far','fa-circle','fa-times');
     }
+    gameOver = false;
 
     $blur.style.display = 'none';
     $modal.style.display = 'none';
@@ -185,12 +229,6 @@ function selectMode(mode){
         document.getElementById("opponent_name").disabled = false; 
 
         document.getElementById("pvc_player_name").disabled = true; 
-        document.getElementById("easy").disabled = true; 
-        document.getElementById("hard").disabled = true; 
-        document.getElementById("impossible").disabled = true; 
-
-
-         
 
     }else if(mode === "player-vs-computer"){
         PvC = true;
@@ -200,9 +238,6 @@ function selectMode(mode){
         document.getElementById('player-vs-player').classList.remove('selected');
 
         document.getElementById("pvc_player_name").disabled = false; 
-        document.getElementById("easy").disabled = false; 
-        document.getElementById("hard").disabled = false; 
-        document.getElementById("impossible").disabled = false; 
 
         document.getElementById("player_name").disabled = true; 
         document.getElementById("opponent_name").disabled = true; 
@@ -238,10 +273,10 @@ function startGame(){
             const $playerName = document.getElementById('pvc_player_name').value;
             
             if($playerName === ""){
-                opponent.name = "COMPUTER";
+                opponent.name = "TERMINATOR";
             }else{
                 player.name = $playerName;
-                opponent.name = "COMPUTER";
+                opponent.name = "TERMINATOR";
             }
             
             $player.innerText = player.name;

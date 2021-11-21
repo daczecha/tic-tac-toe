@@ -8,15 +8,17 @@
 </head>
 <body>
     <div id="game-settings">
+        <h1>TIC TAC TOE</h1>
         <h1>PLEASE CHOOSE GAME MODE</h1>
         <div class="choose">
             <div class="player-vs-player" id = "player-vs-player" onclick="selectMode(this.id)">
-                <h3>PvP</h3>
+                <h3>2 PLAYERS</h3>
                 <div class="container">
                     <div class="player-container" >
                         <label >ENTER NAME</label>
                         <input type = text id = "player_name" maxlength="10" placeholder="PLAYER ONE" disabled>
                     </div>
+                    VS
                     <div class="player-container">     
                         <label >ENTER NAME</label>
                         <input type = text id = "opponent_name" maxlength="10" placeholder="PLAYER TWO" disabled>
@@ -25,21 +27,18 @@
             </div>
 
             <div class="player-vs-computer" id="player-vs-computer" onclick="selectMode(this.id)">
-                <h3>PvC</h3>
+                <h3>AI BOT</h3>
                 <div class="container">
                     <div class="player-container">
                         <label >ENTER NAME</label>
                         <input type = text id = "pvc_player_name" maxlength="10" placeholder="PLAYER ONE" disabled>
                     </div>
-                    <div class="computer-container">     
-                        <label >CHOOSE DIFFICULTY</label>
-                        <div class="difficulties">
-                            <button class = "difficulty" id = "easy" disabled>EASY</button>
-                            <button class = "difficulty" id = "hard" disabled>HARD</button>
-                            <button class = "difficulty" id = "impossible" disabled>IMPOSSIBLE</button>
-                        </div>
+                    VS
+                    <div class="computer-container">
+                        <i class="fas fa-robot"></i>
+                        <label >TERMINATOR</label>
                     </div>
-                </div>
+                </div>  
             </div>
         </div>
         <button class = "btn" id = "submit" onclick = "startGame()">PLAY</button >
