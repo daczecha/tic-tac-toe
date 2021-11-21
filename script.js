@@ -30,22 +30,8 @@ const $player = document.getElementById('player_name_display');
 const $opponent = document.getElementById('opponent_name_display');
 
 
-const $playerName = document.getElementById('player_name').value;
-const $opponentName = document.getElementById('opponent_name').value;
-
-let player = new Player($playerName, 0, $playerScore);
-let opponent = new Player($opponentName, 0, $opponentScore);         
-
-if(player.name === ""){
-    player.name = 'PLAYER ONE';
-}
-
-if(opponent.name === ""){
-    opponent.name = "PLAYER TWO"; 
-}
-
-$player.innerText = player.name;
-$opponent.innerText = opponent.name;
+let player = new Player("PLAYER ONE", 0, $playerScore);
+let opponent = new Player("PLAYER TWO", 0, $opponentScore);         
 
 let board = new Array(9);
 
@@ -53,25 +39,28 @@ let xTurn = true;
 
 setActive();    
 
-
-
-
 function play(index){
     index = Number(index);
-    if(board[index] === undefined){
-        if (xTurn){
-            board[index] = 1;
-            document.getElementById(`${index}_sign`).classList.add('fas', 'fa-times');
-            xTurn = !xTurn;
-        }else {
-            board[index] = 0;
-            document.getElementById(`${index}_sign`).classList.add('far', 'fa-circle');
-            xTurn = !xTurn;
+    if(PvP === true){
+        if(board[index] === undefined){
+            if (xTurn){
+                board[index] = 1;
+                document.getElementById(`${index}_sign`).classList.add('fas', 'fa-times');
+                xTurn = !xTurn;
+            }else {
+                board[index] = 0;
+                document.getElementById(`${index}_sign`).classList.add('far', 'fa-circle');
+                xTurn = !xTurn;
+            }
+            setActive();
+            checkWin();
         }
-        setActive();
-        checkWin();
     }
 }
+
+
+
+
 
 function checkWin(){
     if (
@@ -139,6 +128,16 @@ function restart(){
 
     PvP = false;
     PvC = false;
+
+
+    document.getElementById('player-vs-player').classList.remove('selected');
+    document.getElementById('player-vs-computer').classList.remove('selected');
+    document.getElementById("pvc_player_name").disabled = true; 
+    document.getElementById("easy").disabled = true; 
+    document.getElementById("hard").disabled = true; 
+    document.getElementById("impossible").disabled = true; 
+    document.getElementById("player_name").disabled = true; 
+    document.getElementById("opponent_name").disabled = true;
 }
 
 function replay(){
@@ -190,6 +189,9 @@ function selectMode(mode){
         document.getElementById("hard").disabled = true; 
         document.getElementById("impossible").disabled = true; 
 
+
+         
+
     }else if(mode === "player-vs-computer"){
         PvC = true;
         PvP = false;
@@ -211,8 +213,44 @@ function selectMode(mode){
 
 
 function startGame(){
-    if(PvP === true){
+        if(PvC === false && PvP === false){
+            return;
+        }
         document.getElementById("game").style.display = 'flex';
-        document.getElementById("game-settings").style.display = 'none';   
-    }
+        document.getElementById("game-settings").style.display = 'none';
+
+        if(PvP === true){
+            const $playerName = document.getElementById('player_name').value;
+            const $opponentName = document.getElementById('opponent_name').value;
+            if($playerName === "" || $opponentName === ""){
+                
+            }else{
+                player.name = $playerName;
+                opponent.name = $opponentName;
+            }
+            
+
+            $player.innerText = player.name;
+            $opponent.innerText = opponent.name;
+        }
+
+        if(PvC === true){
+            const $playerName = document.getElementById('pvc_player_name').value;
+            
+            if($playerName === ""){
+                opponent.name = "COMPUTER";
+            }else{
+                player.name = $playerName;
+                opponent.name = "COMPUTER";
+            }
+            
+            $player.innerText = player.name;
+            $opponent.innerText = opponent.name;
+        }
+}
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
