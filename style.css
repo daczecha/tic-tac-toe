@@ -243,7 +243,7 @@ filter: brightness(.9);
     transition: .2s;
 }
 
-.player-vs-player:hover,.player-vs-computer:hover{
+.player-vs-player:hover{
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     scale: 1.01;
 }
@@ -295,3 +295,4 @@ input{
     color:white;
     font-size: 25px;
 }
+

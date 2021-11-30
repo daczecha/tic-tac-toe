@@ -41,8 +41,7 @@ let board = new Array(9);
 let xTurn = true;
 
 setActive();    
-
-
+selectMode("player-vs-player")
 
 function play(index){
     index = Number(index);
