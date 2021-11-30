@@ -39,9 +39,9 @@ let opponent = new Player("PLAYER TWO", 0, $opponentScore);
 let board = new Array(9);
 
 let xTurn = true;
-
+alert('AI Mode Is Under Development');
 setActive();    
-selectMode("player-vs-player")
+selectMode("player-vs-player");
 
 function play(index){
     index = Number(index);
